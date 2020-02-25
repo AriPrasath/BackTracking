@@ -1,0 +1,41 @@
+import java.util.*;
+public class Arr{
+  
+    public static void main(String[] args) {
+      int n=1;
+      for(int q=0;q<n;q++){
+        int len=5;
+        List<String> ar=new ArrayList<String>();
+        ar.add("snake");
+        ar.add("snakes");
+        ar.add("and");
+        ar.add("sand");
+        ar.add("snake");
+        ar.add("ladder");
+        String s="snakesand";
+        List<String> l=new ArrayList<String>();
+        find(s,ar,0,l);
+      }
+    }
+    
+    public static boolean find(String s,List<String> ar,int i,List<String> l){
+      if(i>=s.length()){
+        System.out.println(l);
+        return false;
+      }
+      
+        String k="";
+        for(int j=i;j<s.length();j++){
+          k+=s.charAt(j);
+          if(ar.contains(k)){
+            l.add(k);
+            if(find(s,ar,j+1,l)){
+              return true;
+            }
+            l.remove(l.size()-1);
+          }
+        }
+      
+      return false;
+    }
+}
