@@ -1,0 +1,63 @@
+import java.util.*;
+class Arr{
+  
+    public static void main(String[] args) {
+      Scanner scanner=new Scanner(System.in);
+      int n=scanner.nextInt();
+      scanner.nextLine();
+      for(int q=0;q<n;q++){
+        List<String> ar=new ArrayList<String>();
+        ar.add("mobile");
+        ar.add("it");
+        ar.add("vac");
+        ar.add("itvac");
+        ar.add("man");
+        ar.add("mango");
+        ar.add("icecream");
+        ar.add("and");
+        ar.add("go");
+        ar.add("i");
+        ar.add("love");
+        ar.add("ice");
+        ar.add("cream");
+        String s=scanner.next();
+        List<String> l=new ArrayList<String>();
+        System.out.println(s);
+        find(s,ar,s.length()-1,l);
+      }
+    }
+    
+    public static boolean find(String s,List<String> ar,int i,List<String> l){
+      if(i<0){
+        ListIterator<String> itr=l.listIterator();
+        while(itr.hasNext()) {
+            itr.next();
+        }
+        while(itr.hasPrevious()){
+            System.out.print(itr.previous()+" ");
+        }
+        System.out.println();
+        return false;
+      }
+      
+        String k="";
+        for(int j=i;j>=0;j--){
+          k=s.charAt(j)+k;
+        //   System.out.println(k+"   -"+j);
+          if(ar.contains(k)){
+            //   System.out.println(k);
+            l.add(k);
+            if(find(s,ar,j-1,l)){
+              return true;
+            }
+            l.remove(l.size()-1);
+          }
+        }
+      
+      return false;
+    }
+}
+
+//Ip:
+//1
+//ilovegomobileitvacmangoicecream
