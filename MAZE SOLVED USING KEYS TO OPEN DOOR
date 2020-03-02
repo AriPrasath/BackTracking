@@ -1,0 +1,133 @@
+/*
+    ip:
+    6
+    6
+    0 0 0 0 0 1
+    0 1 0 1 1 1
+    0 1 1 0 1 1
+    1 0 1 0 1 0
+    0 1 1 0 0 0
+    0 1 0 0 1 0
+    2
+    
+    OP: 
+    100000
+    100000
+    100000
+    100000
+    100111
+    111101
+    
+    ip:
+    6
+    6
+    0 0 0 0 0 1
+    0 1 0 1 1 1
+    0 1 1 0 1 1
+    1 0 1 0 1 0
+    0 1 1 0 0 0
+    0 1 0 0 1 0
+    1
+    
+    OP:
+    111000
+    001000
+    001100
+    000100
+    000111
+    000001
+    */
+import java.util.*;
+
+class Arr{
+    public static void main(String[] args){
+        Scanner scanner=new Scanner(System.in);
+        int row=scanner.nextInt();
+        int col=scanner.nextInt();
+        int maze[][]=new int[row][col];
+        
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                maze[i][j]=scanner.nextInt();
+            }
+        }
+        
+        int sol[][]=new int[row][col];
+        int key=scanner.nextInt();
+        
+        findpath(maze,sol,row,col,key);
+    }  
+    
+    public static void findpath(int maze[][],int sol[][],int row,int col,int key){
+        if(solveMaze(maze,sol,0,0,row,col,key)){
+            for(int i=0;i<row;i++){
+                for(int j=0;j<col;j++){
+                    System.out.print(sol[i][j]);
+                }
+                System.out.println();
+            }
+        }else{
+            System.out.println("No Solution");
+        }
+    }
+    
+    public static boolean solveMaze(int maze[][],int sol[][],int i,int j,int row,int col,int key){
+        // for(int q=0;q<row;q++){
+        //     for(int w=0;w<col;w++){
+        //         System.out.print(sol[q][w]);
+        //     }
+        //     System.out.println();
+        // }
+        // System.out.println();
+        if(i==row-1 && j==col-1){
+            sol[i][j]=1;
+            return true;
+        }
+        if(safe(maze,sol,i,j,row,col,key)){
+            if(maze[i][j]==1){
+                key--;
+            }
+            sol[i][j]=1;
+            
+            if(i+1<row && sol[i+1][j]==0){
+                if(solveMaze(maze,sol,i+1,j,row,col,key)){
+                    return true;
+                }
+            }
+            if(j+1<col && sol[i][j+1]==0){
+                if(solveMaze(maze,sol,i,j+1,row,col,key)){
+                    return true;
+                }
+            }
+            if(i-1>=0 && sol[i-1][j]==0){
+                if(solveMaze(maze,sol,i-1,j,row,col,key)){
+                    return true;
+                }
+            }
+            
+            if(j-1>=0 && sol[i][j-1]==0){
+                if(solveMaze(maze,sol,i,j-1,row,col,key)){
+                    return true;
+                }
+            }
+            // if(maze[i][j]==1){
+            //     key++;
+            // }
+            sol[i][j]=0;
+            return false;
+        }
+        return false;
+    }
+    
+    
+    public static boolean safe(int maze[][],int sol[][],int i,int j,int row,int col,int key){
+        if(maze[i][j]==1){
+            if(key>0){
+                return (i<row && j<col && sol[i][j]==0 && i>=0 && j>=0);
+            }
+            return false;
+        }
+        return (i<row && j<col && sol[i][j]==0 && i>=0 && j>=0);
+        
+    }
+}
